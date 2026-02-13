@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,13 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return [
-            [
-                "id" => 99,
-                "title" => "Test",
-                "content" => "Post body"
-            ]
-        ];
+        return Post::all();
     }
 
     /**
@@ -26,50 +21,45 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request->all();
-        $data = $request->only("title", "content");
-        return response()->json([
-            "id" => 99,
-            "title" => $data["title"],
-            "content" => $data["content"],
-        ], 201);
-        // ->setStatusCode(201);
+        $data = $request->validate([
+            "title" => "required|string|min:2",
+            "content" => ["required", "string", "min:2"],
+        ]);
+
+        $data["author_id"] = 2;
+        $post = Post::create($data);
+
+        return response()->json($post, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        return response()->json([
-            "id" => $id,
-            "title" => "Test",
-            "content" => "Post body"
-        ])
-        // ->header("test1", "value1")
-        // ->header("test2", "value2")
-        // ->setStatusCode(404)
-        ;
+        return response()->json($post);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
         $data = $request->validate([
             "title" => "required|string|min:2",
             "content" => ["required", "string", "min:2"]
         ]);
 
-        return $data;
+        $post->update($data);
+        return $post;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
+        $post->delete();
         return response()->noContent();
     }
 }
