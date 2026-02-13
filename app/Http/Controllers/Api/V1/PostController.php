@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -19,16 +20,12 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $data = $request->validate([
-            "title" => "required|string|min:2",
-            "content" => ["required", "string", "min:2"],
-        ]);
+        $data = $request->validated();
+        $data["author_id"] = 1;
 
-        $data["author_id"] = 2;
         $post = Post::create($data);
-
         return response()->json($post, 201);
     }
 
@@ -43,12 +40,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
-        $data = $request->validate([
-            "title" => "required|string|min:2",
-            "content" => ["required", "string", "min:2"]
-        ]);
+        $data = $request->validated();
 
         $post->update($data);
         return $post;
