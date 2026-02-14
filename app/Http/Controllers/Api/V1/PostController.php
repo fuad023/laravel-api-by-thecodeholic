@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return PostResource::collection(Post::with("author")->paginate());
     }
 
     /**
@@ -26,7 +27,7 @@ class PostController extends Controller
         $data["author_id"] = 1;
 
         $post = Post::create($data);
-        return response()->json($post, 201);
+        return new PostResource($post);
     }
 
     /**
@@ -34,7 +35,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     /**
@@ -45,7 +46,7 @@ class PostController extends Controller
         $data = $request->validated();
 
         $post->update($data);
-        return $post;
+        return new PostResource($post);
     }
 
     /**
