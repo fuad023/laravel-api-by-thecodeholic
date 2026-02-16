@@ -1,59 +1,135 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# The following is just a reference note for [me](https://github.com/fuad023)😄.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## getting started w/ [thecodeholic](https://youtu.be/_iuxZygxz98?si=NUHt8ogoSas7P1DO)
 
-## About Laravel
+```
+cd ~/Codes/projects/
+laravel new laravel-api-by-thecodeholic
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Option                  | Select    |
+| ----------------------- | --------- |
+| starter kit             | *none*    |
+| testing framework       | *phpunit* |
+| install laravel boost   | *no*      |
+| database                | *mysql*   |
+| run database migrations | *no*      |
+| run npm commands        | *no*      |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+# to setup mysql
+sudo mysql
+CREATE DATABASE thecodeholic;
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON thecodeholic.* to 'username'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+cd laravel-api-by-thecodeholic/
+code .
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+nano .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### update as follows:  
+`DB_USERNAME=username`  
+`DB_PASSWORD=password`
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+# save n exit
+php artisan migrate
 
-### Premium Partners
+php artisan serve
+# visit [http://127.0.0.1:8000/]
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+git init
+git add .
+git commit -m "initial commit"
+```
 
-## Contributing
+## installing api
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+#1 - using command
+php artisan install:api
+# new db migration: yes
 
-## Code of Conduct
+#2 - using package: laravel breeze
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## miscellaneous
 
-## Security Vulnerabilities
+```
+# to list all registered routes
+php artisan route:list
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# to display basic information about your application
+php artisan about
 
-## License
+# to create controller, named as [PostController]
+php artisan make:controller PostController
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# to create api controller, at [Api/V1/PostController], provides default crud methods
+php artisan make:controller Api/V1/PostController --api
+
+# to create db model, -m flag to apply migration
+php artisan make:model Post -m
+
+# to drop all tables and re-run all migrations
+php artisan migrate:fresh
+
+# to rollback migration one step behind
+php artisan migrate:rollback --step=1
+
+# route/model binding
+
+#
+php artisan make:resource PostResource
+```
+## authentication w/ breeze
+```
+# to scafford project with authentication
+composer require laravel/breeze --dev
+php artisan breeze:install
+# stack: api only
+# testing framework: pest
+# db migration: yes
+```
+
+## installing postman
+
+goto [gh:gist](https://gist.github.com/prrao87/114933c4638a4f77aa3d4b2c5a3b2477)  
+follow the procedure
+
+#### to uninstall postman
+
+```
+sudo rm -rf /opt/Postman /usr/bin/postman /usr/share/applications/postman.desktop
+sudo rm -rf ~/.config/Postman ~/.cache/Postman ~/.local/share/Postman
+```
+
+## installing dbeaver
+
+```
+sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt update
+sudo apt install dbeaver-ce
+```
+
+## installing mysql workbench
+
+goto [mysql:download](https://dev.mysql.com/downloads/workbench/)  
+select ubuntu linux 24.4 64-bit  
+download NOT the dbgsym one  
+open the .deb file using file manager and install it, **or**
+```
+# goto location where the file is loacted
+sudo dpkg -i mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb
+```
+will throw some dependency missing errors, to fix them
+```
+sudo apt --fix-broken install
+sudo dpkg -i mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb # run it again
+```
