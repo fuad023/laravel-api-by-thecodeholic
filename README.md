@@ -29,18 +29,19 @@ EXIT;
 cd laravel-api-by-thecodeholic/
 code .
 
+cp .env.example .env
 nano .env
-```
 
-#### update as follows:  
-`DB_USERNAME=username`  
-`DB_PASSWORD=password`
-
-
-```
+# update as follows:
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=thecodeholic
+# DB_USERNAME=username
+# DB_PASSWORD=password
 # save n exit
-php artisan migrate
 
+php artisan migrate
 php artisan serve
 # visit [http://127.0.0.1:8000/]
 
