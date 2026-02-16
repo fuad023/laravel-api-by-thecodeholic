@@ -1,4 +1,14 @@
 # The following is just a reference note for [me](https://github.com/fuad023)😄.
+to start with this repo
+```
+git clone git@github.com:fuad023/laravel-api-by-thecodeholic.git
+
+# setup database
+# setup .env
+
+composer install
+php artisan serve
+```
 
 ## getting started w/ [thecodeholic](https://youtu.be/_iuxZygxz98?si=NUHt8ogoSas7P1DO)
 
